@@ -1,0 +1,39 @@
+# As long as there isn't a node project created
+# you can get away with using python for the runtime
+# url: (https://cloud.google.com/appengine/docs/standard/python/getting-started/hosting-a-static-website).
+#
+# As far as deployment goes:
+# - login in to gcp to access cloud shell.
+# - set project configuration i.e. zone/region/project
+# - clone the repo i.e. git clone <repo_url>
+# - change directory to the app
+# - deploy app i.e. gcloud app deploy 
+# - get app url i.e. gcloud app browse
+#
+# However, if you do change the runtime to node,
+# it will change the nature in which the
+# app runs -which forces you to create a nodejs
+# project instead and there are more fields to 
+# fill out for configuration purposes in app eng.
+# url: (https://cloud.google.com/appengine/docs/standard/nodejs/config/appref).
+# 
+
+# once you want nodejs, this, and the handlers will change
+# -you'll need to create a build folder
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+# how to add more pages
+- url: / #  route is '/'
+  # route corresponds to the static file below
+  static_files: www/index.html
+  #upload file for static access on app engine
+  upload: www.index.html
+# uploads any other files
+- url: /(.*) # find anything(files)
+  #serve any resources/assets for use
+  static_files: www/\1
+  #upload file for static access on app engine
+  upload: www/(.*)
